@@ -1,4 +1,4 @@
-package se.lexicon.marketplace_api_springboot;
+package se.lexicon.marketplaceapi_springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

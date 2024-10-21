@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>se.lexicon</groupId>
-	<artifactId>Marketplace_API_SpringBoot</artifactId>
+	<artifactId>MarketplaceAPI_SpringBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Marketplace_API_SpringBoot</name>
 	<description>Marketplace_API_SpringBoot</description>
@@ -48,10 +48,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>6.1.14</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
