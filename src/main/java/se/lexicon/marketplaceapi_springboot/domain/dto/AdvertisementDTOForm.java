@@ -23,7 +23,7 @@ public class AdvertisementDTOForm {
     @Size(min = 5, max = 100, message = "Title must contain a min of 3 and max of 100 characters")
     private String title;
 
-    @Size(min = 5, max = 1000, message = "Title must contain a min of 3 and max of 1000 characters")
+    @Size(max = 1000, message = "Title can contain max of 1000 characters")
     private String description;
 
     @NotNull(message = "Price is required")

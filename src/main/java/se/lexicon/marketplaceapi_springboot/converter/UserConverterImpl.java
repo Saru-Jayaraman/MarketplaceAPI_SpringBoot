@@ -24,7 +24,7 @@ public class UserConverterImpl implements UserConverter {
     }
 
     @Override
-    public User toUserEntity(UserDTOForm dto) {
+    public User formToEntity(UserDTOForm dto) {
         return User.builder()
                 .email(dto.getEmail())
                 .password(customPasswordEncoder.encode(dto.getPassword()))
@@ -32,18 +32,34 @@ public class UserConverterImpl implements UserConverter {
     }
 
     @Override
-    public UserDTOView toUserDTOView(User entity) {
+    public UserDTOView entityToView(User entity) {
         List<Advertisement> advertisementEntities = entity.getAdvertisements();
         List<AdvertisementDTOView> advertisementDTOViews = null;
         if (advertisementEntities != null) {
             advertisementDTOViews = advertisementEntities
                                         .stream()
-                                        .map(advertisement -> advertisementConverter.toAdvertisementDTOView(advertisement))
+                                        .map(advertisement -> advertisementConverter.entityToView(advertisement))
                                         .toList();
         }
         return UserDTOView.builder()
                 .email(entity.getEmail())
                 .advertisements(advertisementDTOViews)
+                .build();
+    }
+
+    @Override
+    public User viewToEntity(UserDTOView dto) {
+        List<AdvertisementDTOView> advertisementDTOViews = dto.getAdvertisements();
+        List<Advertisement> advertisementEntities = null;
+        if (advertisementDTOViews != null) {
+            advertisementEntities = advertisementDTOViews
+                    .stream()
+                    .map(advertisement -> advertisementConverter.viewToEntity(advertisement))
+                    .toList();
+        }
+        return User.builder()
+                .email(dto.getEmail())
+                .advertisements(advertisementEntities)
                 .build();
     }
 }

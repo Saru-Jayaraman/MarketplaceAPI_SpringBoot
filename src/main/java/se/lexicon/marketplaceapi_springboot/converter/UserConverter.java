@@ -5,7 +5,9 @@ import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOView;
 import se.lexicon.marketplaceapi_springboot.domain.entity.User;
 
 public interface UserConverter {
-    User toUserEntity(UserDTOForm dto);
+    User formToEntity(UserDTOForm dto);
 
-    UserDTOView toUserDTOView(User entity);
+    UserDTOView entityToView(User entity);
+
+    User viewToEntity(UserDTOView dto);
 }

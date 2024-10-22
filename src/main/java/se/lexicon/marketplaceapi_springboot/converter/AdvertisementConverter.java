@@ -5,9 +5,11 @@ import se.lexicon.marketplaceapi_springboot.domain.dto.AdvertisementDTOView;
 import se.lexicon.marketplaceapi_springboot.domain.entity.Advertisement;
 
 public interface AdvertisementConverter {
-    Advertisement toAdvertisementEntitySave(AdvertisementDTOForm dto);
+    Advertisement formToEntitySave(AdvertisementDTOForm dto);
 
-    Advertisement toAdvertisementEntityUpdate(AdvertisementDTOForm dto);
+    Advertisement formToEntityUpdate(AdvertisementDTOForm dto);
 
-    AdvertisementDTOView toAdvertisementDTOView(Advertisement entity);
+    AdvertisementDTOView entityToView(Advertisement entity);
+
+    Advertisement viewToEntity(AdvertisementDTOView dto);
 }

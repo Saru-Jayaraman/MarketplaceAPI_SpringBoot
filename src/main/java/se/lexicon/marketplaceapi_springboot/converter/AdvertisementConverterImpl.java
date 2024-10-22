@@ -8,7 +8,7 @@ import se.lexicon.marketplaceapi_springboot.domain.entity.Advertisement;
 @Component
 public class AdvertisementConverterImpl implements AdvertisementConverter {
     @Override
-    public Advertisement toAdvertisementEntitySave(AdvertisementDTOForm dto) {
+    public Advertisement formToEntitySave(AdvertisementDTOForm dto) {
         return Advertisement.builder()
                 .title(dto.getTitle())
                 .description(dto.getDescription())
@@ -19,7 +19,7 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
     }
 
     @Override
-    public Advertisement toAdvertisementEntityUpdate(AdvertisementDTOForm dto) {
+    public Advertisement formToEntityUpdate(AdvertisementDTOForm dto) {
         return Advertisement.builder()
                 .advertisementId(dto.getAdvertisementId())
                 .title(dto.getTitle())
@@ -31,7 +31,7 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
     }
 
     @Override
-    public AdvertisementDTOView toAdvertisementDTOView(Advertisement entity) {
+    public AdvertisementDTOView entityToView(Advertisement entity) {
         return AdvertisementDTOView.builder()
                 .advertisementId(entity.getAdvertisementId())
                 .title(entity.getTitle())
@@ -41,6 +41,20 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
                 .expiredDate(entity.getExpiredDate())
                 .category(entity.getCategory())
                 .city(entity.getCity())
+                .build();
+    }
+
+    @Override
+    public Advertisement viewToEntity(AdvertisementDTOView dto) {
+        return Advertisement.builder()
+                .advertisementId(dto.getAdvertisementId())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .price(dto.getPrice())
+                .createdDate(dto.getCreatedDate())
+                .expiredDate(dto.getExpiredDate())
+                .category(dto.getCategory())
+                .city(dto.getCity())
                 .build();
     }
 }
