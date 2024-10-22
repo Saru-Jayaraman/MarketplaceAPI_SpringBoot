@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOForm;
 import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOView;
-import se.lexicon.marketplaceapi_springboot.service.UserService;
+import se.lexicon.marketplaceapi_springboot.service.MarketplaceService;
 
 @RestController
 @RequestMapping("/api/v1")
-public class UserController {
+public class MarketplaceController {
 
-    private final UserService userService;
+    private final MarketplaceService marketplaceService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public MarketplaceController(MarketplaceService marketplaceService) {
+        this.marketplaceService = marketplaceService;
     }
 
     @Operation(summary = "SIGN UP & SIGN IN operation",
@@ -34,7 +34,7 @@ public class UserController {
     })
     @PostMapping("/users")
     public ResponseEntity<UserDTOView> authenticateUser(@RequestBody @Valid UserDTOForm dto) {
-        UserDTOView userDTOView = userService.authenticateUser(dto);
+        UserDTOView userDTOView = marketplaceService.authenticateUser(dto);
         return ResponseEntity.status(HttpStatus.OK).body(userDTOView);
     }
 
@@ -46,7 +46,7 @@ public class UserController {
     })
     @PostMapping("/advertisements")
     public ResponseEntity<UserDTOView> registerAdvertisement(@RequestBody @Valid UserDTOForm userDTO) {
-        UserDTOView userDTOView = userService.registerAdvertisement(userDTO);
+        UserDTOView userDTOView = marketplaceService.registerAdvertisement(userDTO);
         return ResponseEntity.status(HttpStatus.OK).body(userDTOView);
     }
 }

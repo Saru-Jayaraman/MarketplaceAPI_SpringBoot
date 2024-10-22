@@ -16,7 +16,7 @@ import se.lexicon.marketplaceapi_springboot.util.CustomPasswordEncoder;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class MarketplaceServiceImpl implements MarketplaceService {
 
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final CustomPasswordEncoder customPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AdvertisementRepository advertisementRepository, UserConverterImpl userConverter, AdvertisementConverterImpl advertisementConverter, CustomPasswordEncoder customPasswordEncoder) {
+    public MarketplaceServiceImpl(UserRepository userRepository, AdvertisementRepository advertisementRepository, UserConverterImpl userConverter, AdvertisementConverterImpl advertisementConverter, CustomPasswordEncoder customPasswordEncoder) {
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
         this.userConverter = userConverter;
