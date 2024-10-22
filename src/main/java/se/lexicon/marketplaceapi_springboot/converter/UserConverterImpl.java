@@ -28,8 +28,6 @@ public class UserConverterImpl implements UserConverter {
         return User.builder()
                 .email(dto.getEmail())
                 .password(customPasswordEncoder.encode(dto.getPassword()))
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
                 .build();
     }
 
@@ -45,8 +43,6 @@ public class UserConverterImpl implements UserConverter {
         }
         return UserDTOView.builder()
                 .email(entity.getEmail())
-                .firstName(entity.getFirstName())
-                .lastName(entity.getLastName())
                 .advertisements(advertisementDTOViews)
                 .build();
     }

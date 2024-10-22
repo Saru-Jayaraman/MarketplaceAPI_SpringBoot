@@ -19,14 +19,6 @@ public class UserDTOForm {
     @Email(message = "Invalid Email Format")
     private String email;
 
-    @NotBlank(message = "FirstName is required")
-    @Size(min = 3, max = 50, message = "FirstName must contain a min of 3 and max of 50 characters")
-    private String firstName;
-
-    @NotBlank(message = "FirstName is required")
-    @Size(min = 3, max = 50, message = "LastName must contain a min of 3 and max of 50 characters")
-    private String lastName;
-
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be least 8 characters")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",

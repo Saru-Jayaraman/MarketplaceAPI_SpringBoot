@@ -13,7 +13,5 @@ import java.util.List;
 @Builder
 public class UserDTOView {
     private String email;
-    private String firstName;
-    private String lastName;
     private List<AdvertisementDTOView> advertisements;
 }

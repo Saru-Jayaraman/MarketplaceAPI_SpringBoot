@@ -19,12 +19,6 @@ public class User {
     @Id
     private String email;
 
-    @Column(length = 50, nullable = false)
-    private String firstName;
-
-    @Column(length = 50, nullable = false)
-    private String lastName;
-
     @Column(nullable = false)
     private String password;
 
