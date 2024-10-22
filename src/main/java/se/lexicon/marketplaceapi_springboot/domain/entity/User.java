@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -16,28 +17,21 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String email;
 
     @Column(length = 50, nullable = false)
-    @Setter private String firstName;
+    private String firstName;
 
     @Column(length = 50, nullable = false)
-    @Setter private String lastName;
+    private String lastName;
 
-    @Column(length = 50, nullable = false)
-    @Setter private String password;
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "user")
-    @Setter private List<Advertisement> advertisements;
+    private List<Advertisement> advertisements;
 
-    @Setter private boolean isExpired;
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-        this.isExpired = false;
-    }
+    private boolean isExpired;
 
     public void addAdvertisement(Advertisement advertisement) {
         if(advertisement == null)

@@ -41,14 +41,9 @@ public class Advertisement {
     @JoinColumn(name = "email")
     @Setter private User user;
 
-    public Advertisement(String title, String description, Double price, String category, String city, User user) {
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.city = city;
-        this.user = user;
+    @PrePersist
+    public void initialData() {
         this.createdDate = LocalDateTime.now();
-        this.expiredDate = LocalDateTime.now().plusDays(90);
+        this.expiredDate = this.createdDate.plusDays(90);
     }
 }
