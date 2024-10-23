@@ -25,6 +25,8 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
+                .createdDate(dto.getCreatedDate())
+                .expiredDate(dto.getExpiredDate())
                 .category(dto.getCategory())
                 .city(dto.getCity())
                 .build();

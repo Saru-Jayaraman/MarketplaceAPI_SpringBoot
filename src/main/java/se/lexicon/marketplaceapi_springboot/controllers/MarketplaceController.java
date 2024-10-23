@@ -7,16 +7,15 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOForm;
 import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOView;
 import se.lexicon.marketplaceapi_springboot.service.MarketplaceService;
 
 @RestController
 @RequestMapping("/api/v1")
+@Validated
 public class MarketplaceController {
 
     private final MarketplaceService marketplaceService;
@@ -41,12 +40,24 @@ public class MarketplaceController {
     @Operation(summary = "SIGN UP - SIGN IN operation & REGISTER Advertisement after login",
             description = "1. SignUp --> If user's email does not exists.\n2. SignIn --> If user's email exists.\n3. Register Advertisement to the database after logging in.\n4. Return User along with the created Advertisements.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User is logged in via SignUp/SignIn operation and Register Advertisement to the corresponding User."),
+            @ApiResponse(responseCode = "201", description = "User is logged in via SignUp/SignIn operation and Register Advertisement to the corresponding User."),
             @ApiResponse(responseCode = "400", description = "Invalid input.")
     })
-    @PostMapping("/advertisements")
+    @PostMapping("/advertisements/register")
     public ResponseEntity<UserDTOView> registerAdvertisement(@RequestBody @Valid UserDTOForm userDTO) {
         UserDTOView userDTOView = marketplaceService.registerAdvertisement(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDTOView);
+    }
+
+    @Operation(summary = "SIGN UP - SIGN IN operation & DE-REGISTER Advertisement after login",
+            description = "1. SignUp --> If user's email does not exists.\n2. SignIn --> If user's email exists.\n3. De-register Advertisement if exists in the database after logging in.\n4. Return User along with the removed Advertisements.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User is logged in via SignUp/SignIn operation and Delete Advertisement if exists."),
+            @ApiResponse(responseCode = "400", description = "Invalid input.")
+    })
+    @PostMapping("/advertisements/deregister")
+    public ResponseEntity<UserDTOView> deRegisterAdvertisement(@RequestBody @Valid UserDTOForm userDTO) {
+        UserDTOView userDTOView = marketplaceService.deRegisterAdvertisement(userDTO);
         return ResponseEntity.status(HttpStatus.OK).body(userDTOView);
     }
 }

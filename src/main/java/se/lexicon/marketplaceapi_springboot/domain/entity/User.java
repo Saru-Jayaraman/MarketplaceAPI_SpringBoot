@@ -28,20 +28,23 @@ public class User {
     private boolean isExpired;
 
     public void addAdvertisement(Advertisement advertisement) {
-        if(advertisement == null)
-            throw new IllegalArgumentException("Advertisement is null...");
-        if(advertisements == null)
-            advertisements = new ArrayList<>();
         advertisement.setUser(this);
-        this.advertisements.add(advertisement);
+        if(advertisements == null) {
+            advertisements = new ArrayList<>();
+            advertisements.add(advertisement);
+        } else {
+            List<Advertisement> newAdvertisements = new ArrayList<>(List.copyOf(advertisements));
+            newAdvertisements.add(advertisement);
+            advertisements = newAdvertisements;
+        }
     }
 
     public void removeAdvertisement(Advertisement advertisement) {
-        if(advertisement == null)
-            throw new IllegalArgumentException("Advertisement is null...");
         if(this.advertisements.contains(advertisement) && advertisement.getUser() == this) {
             advertisement.setUser(null);
-            this.advertisements.remove(advertisement);
+            List<Advertisement> newAdvertisements = new ArrayList<>(List.copyOf(advertisements));
+            newAdvertisements.remove(advertisement);
+            advertisements = newAdvertisements;
         }
     }
 

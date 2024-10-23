@@ -7,4 +7,6 @@ public interface MarketplaceService {
     UserDTOView authenticateUser(UserDTOForm dto);
 
     UserDTOView registerAdvertisement(UserDTOForm userDTO);
+
+    UserDTOView deRegisterAdvertisement(UserDTOForm userDTO);
 }

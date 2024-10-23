@@ -41,7 +41,7 @@ public class RESTExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, WrongPasswordException.class})
+    @ExceptionHandler({IllegalArgumentException.class, WrongPasswordException.class, DataNotFoundException.class})
     public ResponseEntity<ErrorDTO> handleCustomExceptions(Exception e) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ErrorDTO responseBody = new ErrorDTO(status, e.getMessage());
