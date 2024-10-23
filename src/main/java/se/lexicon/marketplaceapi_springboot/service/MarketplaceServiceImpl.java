@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.lexicon.marketplaceapi_springboot.converter.AdvertisementConverterImpl;
 import se.lexicon.marketplaceapi_springboot.converter.UserConverterImpl;
+import se.lexicon.marketplaceapi_springboot.domain.dto.AdvertisementDTOView;
 import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOForm;
 import se.lexicon.marketplaceapi_springboot.domain.dto.UserDTOView;
 import se.lexicon.marketplaceapi_springboot.domain.entity.Advertisement;
@@ -14,6 +15,7 @@ import se.lexicon.marketplaceapi_springboot.repository.AdvertisementRepository;
 import se.lexicon.marketplaceapi_springboot.repository.UserRepository;
 import se.lexicon.marketplaceapi_springboot.util.CustomPasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,5 +101,19 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         advertisementRepository.delete(advertisementEntity);
 
         return userConverter.entityToView(authenticatedUserEntity);
+    }
+
+    @Override
+    public List<AdvertisementDTOView> retrieveByFilterOption(String optionType, String optionValue) {
+        List<Advertisement> advertisementEntities = new ArrayList<>();
+        if(optionType.equalsIgnoreCase("category")) {
+            advertisementEntities = advertisementRepository.findByCategory(optionValue);
+        } else if(optionType.equalsIgnoreCase("city")) {
+            advertisementEntities = advertisementRepository.findByCity(optionValue);
+        } else if(optionType.equalsIgnoreCase("price")) {
+            String[] priceArray = optionValue.trim().split("-");
+            advertisementEntities = advertisementRepository.findByPriceBetween(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+        }
+        return advertisementEntities.stream().map(advertisementConverter::entityToView).toList();
     }
 }

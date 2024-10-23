@@ -9,4 +9,10 @@ import java.util.List;
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
     List<Advertisement> findByUser_Email(String user_email);
+
+    List<Advertisement> findByCategory(String category);
+
+    List<Advertisement> findByCity(String city);
+
+    List<Advertisement> findByPriceBetween(Double price, Double price2);
 }
