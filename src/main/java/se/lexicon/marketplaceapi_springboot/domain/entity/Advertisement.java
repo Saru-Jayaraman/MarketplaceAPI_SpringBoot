@@ -44,6 +44,6 @@ public class Advertisement {
     @PrePersist
     public void initialData() {
         this.createdDate = LocalDateTime.now();
-        this.expiredDate = this.createdDate.plusDays(90);
+        this.expiredDate = this.createdDate.plusDays(30);
     }
 }

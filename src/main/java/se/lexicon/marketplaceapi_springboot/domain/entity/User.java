@@ -3,7 +3,6 @@ package se.lexicon.marketplaceapi_springboot.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,11 +45,5 @@ public class User {
             newAdvertisements.remove(advertisement);
             advertisements = newAdvertisements;
         }
-    }
-
-    public void removeExpiredAdvertisements() {
-        this.advertisements.removeIf(
-                advertisement -> advertisement.getExpiredDate().isBefore(LocalDateTime.now())
-        );
     }
 }

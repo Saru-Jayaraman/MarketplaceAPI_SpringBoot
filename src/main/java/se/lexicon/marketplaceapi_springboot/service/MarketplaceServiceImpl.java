@@ -15,6 +15,7 @@ import se.lexicon.marketplaceapi_springboot.repository.AdvertisementRepository;
 import se.lexicon.marketplaceapi_springboot.repository.UserRepository;
 import se.lexicon.marketplaceapi_springboot.util.CustomPasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -114,6 +115,135 @@ public class MarketplaceServiceImpl implements MarketplaceService {
             String[] priceArray = optionValue.trim().split("-");
             advertisementEntities = advertisementRepository.findByPriceBetween(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
         }
+        //Remove Expired Advertisements
+        advertisementEntities.removeIf(
+                advertisement -> advertisement.getExpiredDate().isBefore(LocalDateTime.now())
+        );
+        return advertisementEntities.stream().map(advertisementConverter::entityToView).toList();
+    }
+
+    @Override
+    public List<AdvertisementDTOView> retrieveAll() {
+        List<Advertisement> advertisementEntities;
+        advertisementEntities = advertisementRepository.findAll();
+        //Remove Expired Advertisements
+        advertisementEntities.removeIf(
+                advertisement -> advertisement.getExpiredDate().isBefore(LocalDateTime.now())
+        );
+        return advertisementEntities.stream().map(advertisementConverter::entityToView).toList();
+    }
+
+    @Override
+    public List<AdvertisementDTOView> retrieveByMultipleFilterOption(String category, String city, String priceRange) {
+        List<Advertisement> advertisementEntities = new ArrayList<>();
+        if(!category.isEmpty() && !city.isEmpty() && !priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            advertisementEntities = advertisementRepository.findByCategoryAndCityAndPriceBetween(category, city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+        } else if(!category.isEmpty() && !city.isEmpty()) {
+            advertisementEntities = advertisementRepository.findByCategoryAndCity(category, city);
+        } else if(!city.isEmpty() && !priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            advertisementEntities = advertisementRepository.findByCityAndPriceBetween(city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+        } else if(!category.isEmpty() && !priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            advertisementEntities = advertisementRepository.findByCategoryAndPriceBetween(category, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+        } else if(!category.isEmpty()) {
+            advertisementEntities = advertisementRepository.findByCategory(category);
+        } else if(!city.isEmpty()) {
+            advertisementEntities = advertisementRepository.findByCity(city);
+        } else if(!priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            advertisementEntities = advertisementRepository.findByPriceBetween(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+        }
+        //Remove Expired Advertisements
+        advertisementEntities.removeIf(
+                advertisement -> advertisement.getExpiredDate().isBefore(LocalDateTime.now())
+        );
+        return advertisementEntities.stream().map(advertisementConverter::entityToView).toList();
+    }
+
+    @Override
+    public List<AdvertisementDTOView> retrieveOrderedAdvertisements(String category, String city, String priceRange, String orderBy, String orderType) {
+        List<Advertisement> advertisementEntities = new ArrayList<>();
+        if(!category.isEmpty() && !city.isEmpty() && !priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityAndPriceBetweenOrderByPriceAsc(category, city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityAndPriceBetweenOrderByPriceDesc(category, city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityAndPriceBetweenOrderByCityAsc(category, city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityAndPriceBetweenOrderByCityDesc(category, city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            }
+        } else if(!category.isEmpty() && !city.isEmpty()) {
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityOrderByPriceAsc(category, city);
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityOrderByPriceDesc(category, city);
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityOrderByCityAsc(category, city);
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndCityOrderByCityDesc(category, city);
+            }
+        } else if(!city.isEmpty() && !priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCityAndPriceBetweenOrderByPriceAsc(city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCityAndPriceBetweenOrderByPriceDesc(city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCityAndPriceBetweenOrderByCityAsc(city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCityAndPriceBetweenOrderByCityDesc(city, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            }
+        } else if(!category.isEmpty() && !priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndPriceBetweenOrderByPriceAsc(category, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndPriceBetweenOrderByPriceDesc(category, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndPriceBetweenOrderByCityAsc(category, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryAndPriceBetweenOrderByCityDesc(category, Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            }
+        } else if(!category.isEmpty()) {
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryOrderByPriceAsc(category);
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryOrderByPriceDesc(category);
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCategoryOrderByCityAsc(category);
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCategoryOrderByCityDesc(category);
+            }
+        } else if(!city.isEmpty()) {
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCityOrderByPriceAsc(city);
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCityOrderByPriceDesc(city);
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByCityOrderByCityAsc(city);
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByCityOrderByCityDesc(city);
+            }
+        } else if(!priceRange.isEmpty()) {
+            String[] priceArray = priceRange.trim().split("-");
+            if(orderBy.equals("price") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByPriceBetweenOrderByPriceAsc(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("price") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByPriceBetweenOrderByPriceDesc(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("asc")) {
+                advertisementEntities = advertisementRepository.findByPriceBetweenOrderByCityAsc(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            } else if(orderBy.equals("city") && orderType.equals("desc")) {
+                advertisementEntities = advertisementRepository.findByPriceBetweenOrderByCityDesc(Double.valueOf(priceArray[0]), Double.valueOf(priceArray[1]));
+            }
+        }
+        //Remove Expired Advertisements
+        advertisementEntities.removeIf(
+                advertisement -> advertisement.getExpiredDate().isBefore(LocalDateTime.now())
+        );
         return advertisementEntities.stream().map(advertisementConverter::entityToView).toList();
     }
 }

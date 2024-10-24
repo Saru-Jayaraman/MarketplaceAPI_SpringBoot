@@ -14,4 +14,10 @@ public interface MarketplaceService {
     UserDTOView deRegisterAdvertisement(UserDTOForm userDTO);
 
     List<AdvertisementDTOView> retrieveByFilterOption(String optionType, String optionValue);
+
+    List<AdvertisementDTOView> retrieveByMultipleFilterOption(String category, String city, String priceRange);
+
+    List<AdvertisementDTOView> retrieveOrderedAdvertisements(String category, String city, String priceRange, String orderBy, String orderType);
+
+    List<AdvertisementDTOView> retrieveAll();
 }
