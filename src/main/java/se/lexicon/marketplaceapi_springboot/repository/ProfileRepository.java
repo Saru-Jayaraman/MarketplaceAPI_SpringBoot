@@ -12,6 +12,6 @@ import se.lexicon.marketplaceapi_springboot.domain.entity.Profile;
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
     @Transactional
     @Modifying
-    @Query("update Profile p set p.country = :country where p.id = :id")
+    @Query("update Profile p set p.country = :country where p.profileId = :id")
     void updateProfileById(@Param("id") Long id, @Param("country") String country);
 }
