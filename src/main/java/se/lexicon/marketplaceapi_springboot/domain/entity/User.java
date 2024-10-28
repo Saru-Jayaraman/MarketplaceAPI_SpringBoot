@@ -26,6 +26,10 @@ public class User {
 
     private boolean isExpired;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Profile profile;
+
     public void addAdvertisement(Advertisement advertisement) {
         advertisement.setUser(this);
         if(advertisements == null) {

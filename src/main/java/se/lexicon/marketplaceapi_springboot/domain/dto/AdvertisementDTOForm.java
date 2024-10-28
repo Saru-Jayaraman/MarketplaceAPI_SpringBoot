@@ -1,5 +1,6 @@
 package se.lexicon.marketplaceapi_springboot.domain.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -20,7 +21,7 @@ public class AdvertisementDTOForm {
     private Long advertisementId;
 
     @NotBlank(message = "Title is required")
-    @Size(min = 5, max = 100, message = "Title must contain a min of 3 and max of 100 characters")
+    @Size(min = 2, max = 100, message = "Title must contain a min of 3 and max of 100 characters")
     private String title;
 
     @Size(max = 1000, message = "Title can contain max of 1000 characters")
@@ -39,4 +40,7 @@ public class AdvertisementDTOForm {
 
     @NotBlank(message = "City is required")
     private String city;
+
+    @Valid
+    private UserDTOForm user;
 }
