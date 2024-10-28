@@ -81,7 +81,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             //Update profile if both are different
             if(dto.getProfile() != null) {
                 if(!foundUser.getProfile().getCountry().equals(dto.getProfile().getCountry())) {
-                    profileRepository.updateProfileById(dto.getProfile().getId(), dto.getProfile().getCountry());
+                    profileRepository.updateProfileById(dto.getProfile().getProfileId(), dto.getProfile().getCountry());
                     foundUser.getProfile().setCountry(dto.getProfile().getCountry());
                 }
             }

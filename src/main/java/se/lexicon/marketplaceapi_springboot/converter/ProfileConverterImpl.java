@@ -14,17 +14,19 @@ public class ProfileConverterImpl implements ProfileConverter {
                 .lastName(dto.getLastName())
                 .gender(dto.getGender())
                 .country(dto.getCountry())
+                .birthDate(dto.getBirthDate())
                 .build();
     }
 
     @Override
     public ProfileDTOView entityToView(Profile entity) {
         return ProfileDTOView.builder()
-                .id(entity.getId())
+                .profileId(entity.getProfileId())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .gender(entity.getGender())
                 .country(entity.getCountry())
+                .birthDate(entity.getBirthDate())
                 .joinedDate(entity.getJoinedDate())
                 .build();
     }
@@ -32,11 +34,12 @@ public class ProfileConverterImpl implements ProfileConverter {
     @Override
     public Profile viewToEntity(ProfileDTOView dto) {
         return Profile.builder()
-                .id(dto.getId())
+                .profileId(dto.getProfileId())
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .gender(dto.getGender())
                 .country(dto.getCountry())
+                .birthDate(dto.getBirthDate())
                 .joinedDate(dto.getJoinedDate())
                 .build();
     }

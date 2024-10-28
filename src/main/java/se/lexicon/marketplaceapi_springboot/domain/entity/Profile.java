@@ -1,5 +1,7 @@
 package se.lexicon.marketplaceapi_springboot.domain.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +17,7 @@ import java.time.LocalDate;
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long profileId;
 
     @Column(length = 50, nullable = false)
     @Setter private String firstName;
@@ -29,8 +31,8 @@ public class Profile {
     @Column(length = 50, nullable = false)
     @Setter private String country;
 
-//    @Column(nullable = false)
-//    @Setter private LocalDate birthDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @Setter private LocalDate birthDate;
 
     @Setter private LocalDate joinedDate;
 
