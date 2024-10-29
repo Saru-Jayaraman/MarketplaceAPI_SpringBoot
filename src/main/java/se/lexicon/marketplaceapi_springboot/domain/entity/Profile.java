@@ -40,4 +40,12 @@ public class Profile {
     public void initialData() {
         this.joinedDate = LocalDate.now();
     }
+
+    public Profile(String firstName, String lastName, String gender, String country, LocalDate birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.country = country;
+        this.birthDate = birthDate;
+    }
 }

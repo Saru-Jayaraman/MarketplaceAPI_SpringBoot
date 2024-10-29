@@ -46,4 +46,13 @@ public class Advertisement {
         this.createdDate = LocalDateTime.now();
         this.expiredDate = this.createdDate.plusDays(30);
     }
+
+    public Advertisement(String title, String description, Double price, String category, String city, User user) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.city = city;
+        this.user = user;
+    }
 }

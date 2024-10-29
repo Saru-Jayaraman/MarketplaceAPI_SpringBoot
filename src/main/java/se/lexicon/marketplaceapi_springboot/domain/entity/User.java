@@ -30,6 +30,13 @@ public class User {
     @JoinColumn
     private Profile profile;
 
+    public User(String email, String password, Profile profile) {
+        this.email = email;
+        this.password = password;
+        this.profile = profile;
+        this.isExpired = false;
+    }
+
     public void addAdvertisement(Advertisement advertisement) {
         advertisement.setUser(this);
         if(advertisements == null) {
