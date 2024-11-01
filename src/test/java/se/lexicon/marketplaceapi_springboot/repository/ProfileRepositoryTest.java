@@ -1,5 +1,6 @@
 package se.lexicon.marketplaceapi_springboot.repository;
 
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,8 @@ public class ProfileRepositoryTest {
     ProfileRepository profileRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    EntityManager entityManager;
     User userDetails1;
 
     @BeforeEach
@@ -38,6 +41,8 @@ public class ProfileRepositoryTest {
 
         String expectedValue = "India";
         profileRepository.updateProfileById(userDetails1.getProfile().getProfileId(), expectedValue);
+        entityManager.flush();
+        entityManager.clear();
 
         Optional<Profile> optionalProfile = profileRepository.findById(userDetails1.getProfile().getProfileId());
         Assertions.assertTrue(optionalProfile.isPresent());
